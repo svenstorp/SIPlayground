@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SI Playground</string>
+
+    <string name="fullscreen_text">----</string>
+    <string name="status_text">Status: disconnected</string>
+    <string name="status_text_wrapped"></string>
+</resources>
