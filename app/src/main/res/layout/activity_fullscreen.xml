@@ -23,12 +23,25 @@
             android:id="@+id/fullscreen_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:gravity="center"
+            android:layout_weight="5"
+            android:gravity="bottom|center_horizontal"
             android:keepScreenOn="true"
             android:text="@string/fullscreen_text"
             android:textColor="#eeeeee"
             android:textSize="86sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/punches_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20sp"
+            android:paddingRight="20sp"
+            android:text="@string/punches_text"
+            android:textColor="#eeeeee"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -63,6 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/status_text_wrapped" />
+
         </LinearLayout>
 
     </FrameLayout>

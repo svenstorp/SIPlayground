@@ -29,6 +29,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private TextView mContentView;
+    private TextView mPunchesView;
     private TextView mStatusView;
     private long deviceId = 0;
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -81,10 +82,11 @@ public class FullscreenActivity extends AppCompatActivity {
             switch(event) {
                 case DeviceDetected:
                     activity.deviceId = intent.getLongExtra("Serial", 0);
-
                     activity.mStatusView.setText("Device (" + activity.deviceId + ") online");
                     break;
                 case ReadStarted:
+                    activity.mPunchesView.setText("");
+                    activity.mContentView.setText("");
                     activity.mStatusView.setText("Device (" + activity.deviceId + ") reading card " + intent.getLongExtra("CardId", 0) + "...");
                     break;
                 case ReadCanceled:
@@ -98,6 +100,13 @@ public class FullscreenActivity extends AppCompatActivity {
                         long seconds = (timeDiff - minutes * 60 * 1000) / 1000;
                         long hundreds = (timeDiff - minutes * 60 * 1000 - seconds * 1000);
                         activity.mContentView.setText(String.format("%d:%02d.%02d", minutes, seconds, hundreds));
+                        StringBuilder tmpPunches = new StringBuilder();
+                        for (int i=0; i<cardEntry.punches.size(); i++) {
+                            if (i > 0)
+                                tmpPunches.append(", ");
+                            tmpPunches.append(cardEntry.punches.get(i).code);
+                        }
+                        activity.mPunchesView.setText(tmpPunches);
                     }
                     else {
                         activity.mContentView.setText("Ingen startstämpel");
@@ -120,11 +129,18 @@ public class FullscreenActivity extends AppCompatActivity {
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
+        mPunchesView = findViewById(R.id.punches_content);
         mStatusView = findViewById(R.id.statusView);
 
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggle();
+            }
+        });
+        mPunchesView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggle();
